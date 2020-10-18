@@ -1,5 +1,5 @@
-//library hello_world;
-import 'package:sky/widgets/basic.dart';
+//library hello_world; 20150729 iOS info.plist
+import 'package:sky/widgets.dart';
 
 class HelloWorldApp extends App {
   Widget build() {

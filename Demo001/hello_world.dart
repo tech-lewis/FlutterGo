@@ -1,7 +1,11 @@
-import 'package:sky/framework/fn.dart';
+import 'package:sky/widgets/basic.dart';
 
 class HelloWorldApp extends App {
-  UINode build() {
+  Widget build() {
     return new Text('Hello, world!');
   }
+}
+
+void main() {
+  runApp(new HelloWorldApp());
 }

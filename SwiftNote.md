@@ -72,7 +72,7 @@ Swift 1.0 在暑假的时候发布Release 随后Firefox开始使用Swift开发�
 Swift 2.0 包括的NSError类型的强化 错误处理更强了
 Swift 2.2 更新了新功能 包括了Guard和协议的扩展支持
 
-Swift 3.0 更新了sequence序列的新功能 如何使用内联序列化函数呢? 定义了两个内联的function
+Swift 3.0 更新了sequence序列的新功能 如何使用内联序列化函数呢? 定义了两个内联的function 复习关于控制器的移除filter 和 first查找跳转popTo指定的vc
   关于first和next的使用 它们可以返回无限的序列吗 懒加载的形式传递给block闭包的好处是什么
 	更面向对象的GCD 与Core Graphics 更简化的API
 	移除很多类的NS前缀的 如Data Bundle URL等等

@@ -1,4 +1,5 @@
 // Dart 语法测试 520
+// Color基础
 import "dart:math";
 import 'dart:sky';
 void main() {
@@ -11,7 +12,7 @@ void main() {
   PictureRecorder recorder = new PictureRecorder(width, height);
   double radius = min(width, height) * 0.45;
 
-  Paint paint = new Paint()..setARGB(255, 0, 255, 0);
+  Paint paint = new Paint()..color = new Color.fromARGB(a, r, g, b);
 
   recorder.drawCircle(width / 2, height / 2, radius, paint);
 

@@ -3,7 +3,8 @@ import "dart:math";
 import 'dart:sky';
 void main() {
   print("Hello, world");
-
+  // double width = view.width;
+  // double height = view.height;
   double width = 500.0;
   double height = 500.0;
 

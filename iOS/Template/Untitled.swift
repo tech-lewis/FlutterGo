@@ -74,6 +74,12 @@ extension ListViewController {
 		emptyView.backgroundColor = Color.background
 		server.emptyContentView = emptyView
 		//server.emptyContentView = CourseListEmptyView.createView()
+		
+		/*
+		如果list列表包含选择某一项的操作（如支付方法的选择）必须用到这个属性
+		但是push列表跳转一定要保证server.isDeselectAutomatically为false，让列表能正常跳转到详情页面
+		*/
+		// server.isDeselectAutomatically
 		server.tableView.backgroundColor = .white
 		server.tableView.showsVerticalScrollIndicator = false
 		server.tableView.separatorStyle = .none

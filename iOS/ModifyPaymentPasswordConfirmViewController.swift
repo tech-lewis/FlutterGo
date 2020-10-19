@@ -284,3 +284,244 @@ extension ModifyPaymentPasswordConfirmViewController.payPasscodeView:UITextField
         return true
     }
 }
+
+// push --> modal
+import UIKit
+import ApplicationKit
+class PaymentPaypasswordSmsAuthViewController: UIViewController, SPayPassWordViewDelegate {
+  func entryComplete(password: String) {
+    // 完成输入 检查验证码是否正确
+    if let phoneNumber = User.current.phoneNumber {
+      var params = ["mobile": phoneNumber]
+      params["code"] = password
+      API.checkPaymentPasswordSmsAuth.query(params).headerField(API.tokenParameters).request { (res) in
+        //response
+        //self.hud.showMessage(message: res["msg"])
+        let isCheckSmsCode:Bool = res["data"]["flag"] ?? false
+        print(isCheckSmsCode)
+        if isCheckSmsCode == false {
+          self.hud.showMessage(message: "错误的验证码")
+        }
+        guard isCheckSmsCode == true else {
+          //self.hud.showMessage(message: "错误的验证码")
+          return
+        }
+        // 允许发送短信 跳转修改
+        ////Presenter.push(CoursePaySuccessViewController())
+          let vc = SettingPaymentPasswordViewController() //重设支付密码的界面
+          vc.currentSmsCode = password
+        #warning("Presenter的问题")
+        if self.course != nil {
+          vc.soureViewControllerHandleBlock = {[weak self] in
+            let successController = CoursePaySuccessViewController()
+            successController.course = self?.course
+            Presenter.push(successController)
+          }
+        } else {
+          guard let viewController = Presenter.currentNavigationController?.viewControllers.first(where: { $0.isKind(of: SettingViewController.self) }) else {
+            Presenter.pop()
+            return
+          }
+          // 跳转回设置页面
+          Presenter.pop(to: viewController)
+        }
+          
+        vc.modalPresentationStyle = .fullScreen
+        Presenter.present(vc)
+        
+      }
+    }
+  }
+  
+  // 当前课程
+  public  var course: CourseItem?
+//  private let confirmButton = UIButton(type: .custom)
+  private let sendSmsButton = UIButton()
+  private let topLabel = UILabel()
+  private var payView: SPayPassWordView?
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.setupUI()
+    self.updateUI()
+  }
+}
+
+//extension ModifyPasswordViewController: SPayPassWordViewDelegate{
+//  //  func entryComplete() {}
+//}
+
+private extension PaymentPaypasswordSmsAuthViewController {
+
+  @objc func clickModifyPwdButton(_ sender: UIButton) {
+    var time = 60
+    let codeTimer = DispatchSource.makeTimerSource(flags: .init(rawValue: 0), queue: DispatchQueue.global())
+    codeTimer.schedule(deadline: .now(), repeating: .milliseconds(1000))
+    codeTimer.setEventHandler {
+        time = time - 1
+        DispatchQueue.main.async {
+          sender.isEnabled = false
+        }
+        if time < 0 {
+            codeTimer.cancel()
+            DispatchQueue.main.async {
+                sender.isEnabled = true
+                sender.setTitle("重新发送", for: .normal)
+            }
+            return
+        }
+        
+        DispatchQueue.main.async {
+            sender.setTitle("\(time)S", for: .normal)
+        }
+        
+    }
+    
+    if #available(iOS 10.0, *) {
+      codeTimer.activate()
+    } else {
+      // Fallback on earlier versions
+      codeTimer.resume()
+    }
+
+    
+    
+    if let phoneNumber = User.current.phoneNumber {
+      let params = ["mobile": phoneNumber]
+      API.sendChangePaymentPasswordSmsCode.query(params).headerField(API.tokenParameters).request { (res) in
+        //response
+        guard res["result"] == 1 else { return }
+        // 发送短信成功
+      }
+    }
+  }
+  @objc func clickConfirm(_ sender: Any) {
+    
+    self.view.endEditing(true)
+    
+//    guard Tips.judg(currentPassword: self.currentInputView.content) else { return }
+//    guard Tips.judg(newPassword: self.newInputView.content) else { return }
+//
+//    var paramter: [String : Any] = [:]
+//    paramter["oldPassword"] = self.currentInputView.content?.md5
+//    paramter["newPassword"] = self.newInputView.content?.md5
+//    var parm: [String: String] = ["platform": "3"]
+//    API.checkPaymentBalance.query(parm).headerField(API.tokenParameters).request { (res) in
+//      print("当前帐号余额明细\(res)");
+//    }
+  }
+}
+
+private extension PaymentPaypasswordSmsAuthViewController {
+  func updateUI() {
+    
+    if let phoneNumber = User.current.phoneNumber {
+      topLabel.text = "验证码将发送到您的手机号\n\(phoneNumber)"
+    }
+    
+  }
+  
+  func setupUI() {
+    self.view.backgroundColor = .white
+    self.navigationView.setup(title: "支付设置")
+    self.navigationView.showBack()
+    let payPassWordView = SPayPassWordView(frame: CGRect(x: 0, y: 0, width: 220, height: 55))
+    payPassWordView.lenght = 4
+    payPassWordView.borderColor = Color.rgb(r: 219, g: 219, b: 219)
+    payPassWordView.borderRadius = 10
+    payPassWordView.starColor   = Color.black
+    payPassWordView.input()
+    payPassWordView.delegate = self
+    self.payView = payPassWordView
+    topLabel.textAlignment = .center
+    topLabel.textColor = Color.black
+    topLabel.numberOfLines = 2
+    topLabel.font = Font.pingFangSCSemibold(17)
+    view.addSubview(topLabel)
+    topLabel.layout.add { (make) in
+      make.centerX().equal(view)
+      make.hugging(axis: .vertical)
+      make.centerX().top(89+App.shared.navigationBar.maxY).equal(view)
+    }
+    
+    let inputView = UIView()
+    inputView.backgroundColor = .white
+    self.view.addSubview(inputView)
+    inputView.layout.add { (make) in
+      make.width(221).height(55)
+      make.centerX().equal(view)
+      make.top(267).equal(view)
+    }
+    
+    inputView.addSubview(payPassWordView)
+    sendSmsButton.setTitle("发送验证码", for: .normal)
+    sendSmsButton.setTitleColor(Color.textOfBlue, for: .normal)
+    sendSmsButton.titleLabel?.font = Font.pingFangSCMedium(15)
+    sendSmsButton.layer.masksToBounds = true
+    sendSmsButton.layer.cornerRadius = 17
+    sendSmsButton.layer.borderWidth = 1.0
+    sendSmsButton.addTarget(self, action: #selector(clickModifyPwdButton(_:)), for: .touchDown)
+    sendSmsButton.layer.borderColor = Color.textOfBlue.cgColor
+    view.addSubview(sendSmsButton)
+    sendSmsButton.layout.add { (make) in
+      make.width(100).height(34)
+      make.trailing(8).top(15+55).equal(inputView)
+    }
+    
+//    self.confirmButton.setBackgroundImage(UIImage(named: "mine_shadow_button_bg"), for: .normal)
+//    self.confirmButton.setBackgroundImage(UIImage(named: "mine_shadow_button_bg"), for: .highlighted)
+//    self.confirmButton.setTitle("", for: .normal)
+//    self.confirmButton.setTitleColor(.white, for: .normal)
+//    self.confirmButton.titleLabel?.font = Font.system(16, isBold: true)
+//    self.confirmButton.addTarget(self, action: #selector(clickConfirm(_:)), for: .touchUpInside)
+//    self.view.addSubview(self.confirmButton)
+//
+//    self.confirmButton.layout.add { (make) in
+//      make.top(100).equal(inputView).bottom()
+//      make.leading(-3).trailing(3).equal(view)
+//    }
+  }
+}
+
+
+// 密码设置页面的逻辑处理 设置完毕
+if let phoneNumber = User.current.phoneNumber {
+  var params = ["mobile": phoneNumber]
+  params["code"] = password
+  API.checkPaymentPasswordSmsAuth.query(params).headerField(API.tokenParameters).request { (res) in
+    //response
+    //self.hud.showMessage(message: res["msg"])
+    let isCheckSmsCode:Bool = res["data"]["flag"] ?? false
+    print(isCheckSmsCode)
+    if isCheckSmsCode == false {
+      self.hud.showMessage(message: "错误的验证码")
+    }
+    guard isCheckSmsCode == true else {
+      //self.hud.showMessage(message: "错误的验证码")
+      return
+    }
+    // 允许发送短信 跳转修改
+    ////Presenter.push(CoursePaySuccessViewController())
+      let vc = SettingPaymentPasswordViewController() //重设支付密码的界面
+      vc.currentSmsCode = password
+    #warning("Presenter的问题")
+    if self.course != nil {
+      vc.soureViewControllerHandleBlock = {[weak self] in
+        let successController = CoursePaySuccessViewController()
+        successController.course = self?.course
+        Presenter.push(successController)
+      }
+    } else {
+      guard let viewController = Presenter.currentNavigationController?.viewControllers.first(where: { $0.isKind(of: SettingViewController.self) }) else {
+        Presenter.pop()
+        return
+      }
+      // 跳转回设置页面
+      Presenter.pop(to: viewController)
+    }
+      
+    vc.modalPresentationStyle = .fullScreen
+    Presenter.present(vc)
+    
+  }
+}
+

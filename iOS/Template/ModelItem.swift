@@ -1,7 +1,7 @@
 //
 //  BuildingInfoItem.swift
 //  IntellectiveTrainingPlatform
-//
+//	ModelItem
 //  Created by mark on 2020/10/17.
 //
 import ApplicationKit

@@ -4,6 +4,7 @@
 //  带有HeaderView表头的空白列表 有上拉下拉刷新
 //  Created by mac on 12.10.20.
 //
+
 import UIKit
 import ApplicationKit
 class ListViewController: UIViewController {
@@ -30,7 +31,6 @@ class ListViewController: UIViewController {
 			setupUI()
 			// Do any additional setup after loading the view.
 			//updateUI()
-		
 			setupListView(autoLoad: true, canRefresh: true, canLoadMore: true, hasLoadingView: true)
 	}
 }

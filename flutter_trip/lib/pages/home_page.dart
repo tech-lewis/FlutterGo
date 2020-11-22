@@ -5,6 +5,11 @@ import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/model/sales_box_model.dart';
+import 'package:flutter_trip/pages/city_page.dart';
+import 'package:flutter_trip/pages/search_page.dart';
+import 'package:flutter_trip/pages/speak_page.dart';
+import 'package:flutter_trip/util/navigator_util.dart';
+import 'package:flutter_trip/widget/cached_image.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
@@ -16,19 +21,22 @@ import 'package:flutter_trip/widget/webview.dart';
 const APPBAR_SCROLL_OFFSET = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '网红打卡地 景点 酒店 美食';
 
+///首页
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   double appBarAlpha = 0;
-  List<CommonModel> bannerList = [];
-  List<CommonModel> localNavList = [];
-  GridNavModel gridNav;
-  List<CommonModel> subNavList = [];
-  SalesBoxModel salesBox;
-  bool _loading = true;
+  List<CommonModel> bannerList = []; //轮播图列表
+  List<CommonModel> localNavList = []; //local导航
+  GridNavModel gridNav; //网格卡片
+  List<CommonModel> subNavList = []; //活动导航
+  SalesBoxModel salesBox; //salesBox数据
+  bool _loading = true; //页面加载状态
+  String city = '西安市';
 
   @override
   void initState() {
@@ -36,7 +44,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  _onScroll(offset) {
+  //缓存页面
+  @override
+  bool get wantKeepAlive => true;
+
+  //判断滚动改变透明度
+  void _onScroll(offset) {
     double alpha = offset / APPBAR_SCROLL_OFFSET;
     if (alpha < 0) {
       alpha = 0;
@@ -48,6 +61,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  //加载首页数据
   Future<Null> _handleRefresh() async {
     try {
       HomeModel model = await HomeDao.fetch();
@@ -66,6 +80,30 @@ class _HomePageState extends State<HomePage> {
       });
     }
     return null;
+  }
+
+  //跳转到城市列表
+  void _jumpToCity() async {
+    String result = await NavigatorUtil.push(context, CityPage());
+    if (result != null) {
+      setState(() {
+        city = result;
+      });
+    }
+  }
+
+  //跳转搜索页面
+  void _jumpToSearch() {
+    NavigatorUtil.push(
+        context,
+        SearchPage(
+          hint: SEARCH_BAR_DEFAULT_TEXT,
+        ));
+  }
+
+  //跳转语音识别页面
+  void _jumpToSpeak() {
+    NavigatorUtil.push(context, SpeakPage());
   }
 
   @override
@@ -88,6 +126,7 @@ class _HomePageState extends State<HomePage> {
                             //滚动并且是列表滚动的时候
                             _onScroll(scrollNotification.metrics.pixels);
                           }
+                          return false;
                         },
                         child: _listView,
                       ))),
@@ -97,7 +136,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  /*listView列表*/
+  //listView列表
   Widget get _listView {
     return ListView(
       children: <Widget>[
@@ -152,7 +191,8 @@ class _HomePageState extends State<HomePage> {
               inputBoxClick: _jumpToSearch,
               speakClick: _jumpToSpeak,
               defaultText: SEARCH_BAR_DEFAULT_TEXT,
-              leftButtonClick: () {},
+              leftButtonClick: _jumpToCity,
+              city: city,
             ),
           ),
         ),
@@ -175,26 +215,21 @@ class _HomePageState extends State<HomePage> {
         pagination: SwiperPagination(),
         itemCount: bannerList.length,
         itemBuilder: (BuildContext context, int index) {
-          return Image.network(
-            bannerList[index].icon,
+          return CachedImage(
+            imageUrl: bannerList[index].icon,
             fit: BoxFit.fill,
           );
         },
         onTap: (index) {
-          Navigator.push(
+          NavigatorUtil.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => WebView(
-                        url: bannerList[index].url,
-                        hideAppBar: bannerList[index].hideAppBar,
-                        title: bannerList[index].title,
-                      )));
+              WebView(
+                url: bannerList[index].url,
+                hideAppBar: bannerList[index].hideAppBar,
+                title: bannerList[index].title,
+              ));
         },
       ),
     );
   }
-
-  _jumpToSearch() {}
-
-  _jumpToSpeak() {}
 }

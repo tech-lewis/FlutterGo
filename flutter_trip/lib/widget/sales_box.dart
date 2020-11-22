@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/sales_box_model.dart';
+import 'package:flutter_trip/util/navigator_util.dart';
+import 'package:flutter_trip/widget/cached_image.dart';
 import 'package:flutter_trip/widget/webview.dart';
 
 class SalesBox extends StatelessWidget {
@@ -21,7 +23,7 @@ class SalesBox extends StatelessWidget {
     );
   }
 
-  _items(BuildContext context) {
+  Widget _items(BuildContext context) {
     if (salesBox == null) return null;
     List<Widget> items = [];
     items.add(_doubleItem(
@@ -41,8 +43,8 @@ class SalesBox extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Image.network(
-                salesBox.icon,
+              CachedImage(
+                imageUrl: salesBox.icon,
                 height: 15,
                 fit: BoxFit.fill,
               ),
@@ -60,11 +62,8 @@ class SalesBox extends StatelessWidget {
                         end: Alignment.centerRight)),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                WebView(url: salesBox.moreUrl, title: '更多活动')));
+                    NavigatorUtil.push(
+                        context, WebView(url: salesBox.moreUrl, title: '更多活动'));
                   },
                   child: Text(
                     '获取更多福利 >',
@@ -107,23 +106,22 @@ class SalesBox extends StatelessWidget {
     BorderSide borderSide = BorderSide(width: 0.8, color: Color(0xfff2f2f2));
     return GestureDetector(
         onTap: () {
-          Navigator.push(
+          NavigatorUtil.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => WebView(
-                        url: model.url,
-                        statusBarColor: model.statusBarColor,
-                        hideAppBar: model.hideAppBar,
-                        title: model.title,
-                      )));
+              WebView(
+                url: model.url,
+                statusBarColor: model.statusBarColor,
+                hideAppBar: model.hideAppBar,
+                title: model.title,
+              ));
         },
         child: Container(
           decoration: BoxDecoration(
               border: Border(
                   right: isLeft ? borderSide : BorderSide.none,
                   bottom: isLast ? BorderSide.none : borderSide)),
-          child: Image.network(
-            model.icon,
+          child: CachedImage(
+            imageUrl: model.icon,
             fit: BoxFit.fill,
             width: MediaQuery.of(context).size.width / 2 - 8,
             height: isBig ? 129 : 80,

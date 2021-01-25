@@ -613,3 +613,8 @@ isDisJoint  用来判断两个set是否有共有的元素 ⚠️没有公共元�
 3 理解字典底层的实现 Hashtable
 
 开始Swift函数的学习
+
+
+Navigator在新版本的RN中被弃用了，要用新的UI库代替Antd-mobile
+export default和module.export = name的区别
+import的使用在NodeJS中的区别

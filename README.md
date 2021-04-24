@@ -1,2 +1,3 @@
 # FlutterGo
-Flutter 1.20.2 study
+- 2018/11/29
+Flutter 0.11.3 study

@@ -1,6 +1,6 @@
 # FlutterGo
 # Flutter发展
-2014.10 Flutter的前身Sky在Github上开源
+2014.10 2014-10-24 Flutter的前身Sky在Github上开源
 
 2015.3 2015/3/出现第一个flutter包:/flutter/pubspec.yaml
 

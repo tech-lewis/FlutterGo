@@ -6,6 +6,8 @@
 
 2015.6 6月29月底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
 
+2015.6 30号兼容了Mac平台:Allow loading SkyX files on Mac desktop
+
 2015.9 2015/9/4还没支持iOS平台. 9月9才能开始支持iOS平台(6年前的事情)
 
 2015.10 经过一年的开源，Sky正式改名为Flutter。在Dart开发者峰会上发布了第一个版本。

@@ -4,7 +4,7 @@
 
 2015.3 2015/3/出现第一个flutter包:/flutter/pubspec.yaml
 
-2015.6 2015/6/11-Sky引擎支持iOS平台Basic Sky shell for iOS targets
+2015.6 2015/6/11-早上7:14Sky引擎支持iOS平台Basic Sky shell for iOS targets
 
 2015.6 6月29月底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
 

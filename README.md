@@ -1,11 +1,14 @@
 # FlutterGo
 # Flutter发展
 2014.10 Flutter的前身Sky在Github上开源
+
 2015.5 2015/6/11-Sky引擎支持iOS平台Basic Sky shell for iOS targets
+
 2015.9 2015/9/4还没支持iOS平台. 9月9才能开始支持iOS平台(6年前的事情)
 
 2015.10 经过一年的开源，Sky正式改名为Flutter。在Dart开发者峰会上发布了第一个版本。
 
+2015.12 12月18提供了‘flutter ios --init' command that fetches the Xcode project from the cloud and configures it for a given flutter project
 2016.7  提供了iOS和模拟器的模版代码运行和使用
 
 2017.06 发布了Flutter v0.0.30-dev

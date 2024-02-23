@@ -2,7 +2,9 @@
 # Flutter发展
 2014.10 Flutter的前身Sky在Github上开源
 
-2015.5 2015/6/11-Sky引擎支持iOS平台Basic Sky shell for iOS targets
+2015.6 2015/6/11-Sky引擎支持iOS平台Basic Sky shell for iOS targets
+
+2015.6 6月29月底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
 
 2015.9 2015/9/4还没支持iOS平台. 9月9才能开始支持iOS平台(6年前的事情)
 

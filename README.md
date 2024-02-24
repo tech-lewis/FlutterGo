@@ -16,6 +16,8 @@
 
 - 2015.12 12月18提供了‘flutter ios --init' command that fetches the Xcode project from the cloud and configures it for a given flutter project
 
+- 2016.2  2月17可使用flutter doctor命令安装Flutter 第一个版本的命令不全 需要修改bin/flutter文件的函数脚本
+- 
 - 2016.3  3月24可使用flutter doctor命令安装Flutter2016.3
 
 - 2016.7  提供了iOS和模拟器的模版代码运行和使用

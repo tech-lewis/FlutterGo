@@ -6,9 +6,9 @@
 
 2015.6 2015/6/11-早上7:14Sky引擎支持iOS平台Basic Sky shell for iOS targets
 
-2015.6 6月29月底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
+2015.7 7月29日底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
 
-2015.6 30号兼容了Mac平台:Allow loading SkyX files on Mac desktop
+2015.7 30号兼容了Mac平台:Allow loading SkyX files on Mac desktop
 
 2015.9 2015/9/4还没支持iOS平台. 9月9才能开始支持iOS平台(6年前的事情)
 

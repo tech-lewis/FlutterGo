@@ -1,23 +1,24 @@
 # FlutterGo
 # Flutter发展
-2014.10 2014-10-24 Flutter的前身Sky在Github上开源
+- 2014.10 2014-10-24 Flutter的前身Sky在Github上开源
 
-2015.3 2015/3/出现第一个flutter包:/flutter/pubspec.yaml
+- 2015.3 2015/3/出现第一个flutter包:/flutter/pubspec.yaml
 
-2015.6 2015/6/11-早上7:14Sky引擎支持iOS平台Basic Sky shell for iOS targets
+- 2015.6 2015/6/11-早上7:14Sky引擎支持iOS平台Basic Sky shell for iOS targets
 
-2015.7 7月29日底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
+- 2015.7 7月29日底开始兼容iOS的example:flutter/packages/flutter/example/game/ios
 
-2015.7 30号兼容了Mac平台:Allow loading SkyX files on Mac desktop
+- 2015.7 30号兼容了Mac平台:Allow loading SkyX files on Mac desktop
 
-2015.9 2015/9/4还没支持iOS平台. 9月9才能开始支持iOS平台(6年前的事情)
+- 2015.9 2015/9/4还没支持iOS平台. 9月9才能开始支持iOS平台(6年前的事情)
 
-2015.10 经过一年的开源，Sky正式改名为Flutter。在Dart开发者峰会上发布了第一个版本。
+- 2015.10 经过一年的开源，Sky正式改名为Flutter。在Dart开发者峰会上发布了第一个版本。
 
-2015.12 12月18提供了‘flutter ios --init' command that fetches the Xcode project from the cloud and configures it for a given flutter project
+- 2015.12 12月18提供了‘flutter ios --init' command that fetches the Xcode project from the cloud and configures it for a given flutter project
 
-2016.3  3月24可使用flutter doctor命令安装Flutter2016.3
-2016.7  提供了iOS和模拟器的模版代码运行和使用
+- 2016.3  3月24可使用flutter doctor命令安装Flutter2016.3
+
+- 2016.7  提供了iOS和模拟器的模版代码运行和使用
 
 2017.06 发布了Flutter v0.0.30-dev
 

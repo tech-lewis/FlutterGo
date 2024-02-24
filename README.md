@@ -15,6 +15,8 @@
 2015.10 经过一年的开源，Sky正式改名为Flutter。在Dart开发者峰会上发布了第一个版本。
 
 2015.12 12月18提供了‘flutter ios --init' command that fetches the Xcode project from the cloud and configures it for a given flutter project
+
+2016.3  3月24可使用flutter doctor命令安装Flutter2016.3
 2016.7  提供了iOS和模拟器的模版代码运行和使用
 
 2017.06 发布了Flutter v0.0.30-dev
@@ -33,3 +35,6 @@ hr
 Flutter 0.11.3 study
 - 2015/7/29 iOS demo https://github.com/flutter/flutter/tree/122add4344fe65da71817314073661d12cc58681
 - 2016/03/08 获取Flutter.framework [https://github.com/flutter/engine/tree/8ec0463dc5cd8a648040ec4a6209b10552dd42f4]
+- Flutter from https://github.com/flutter/flutter.git (on stable)
+  Framework: e10b74cd24557202109e8891e9364e77e3f40aef (8 years ago)
+  Engine:    56bca69d7a9112af22e6873599b57b5b2fe90395
